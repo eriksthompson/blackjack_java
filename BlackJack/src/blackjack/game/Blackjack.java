@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -15,13 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Blackjack {
-	private final static String[] deckPic = {"card/spades/a.png","card/diamonds/a.png", "card/hearts/a.png", "card/clubs/a.png",  "card/hearts/2.png","card/diamonds/2.png", "card/clubs/2.png","card/spades/2.png",
-			"card/clubs/3.png","card/diamonds/3.png", "card/hearts/3.png",  "card/spades/3.png", "card/clubs/4.png", "card/spades/4.png", "card/diamonds/4.png","card/hearts/4.png",
-			"card/clubs/5.png", "card/diamonds/5.png", "card/spades/5.png", "card/hearts/5.png",
-			"card/clubs/6.png","card/diamonds/6.png","card/hearts/6.png","card/spades/6.png", "card/diamonds/7.png","card/clubs/7.png", "card/spades/7.png","card/hearts/7.png",
-			"card/clubs/8.png", "card/diamonds/8.png",   "card/hearts/8.png","card/spades/8.png",  "card/spades/9.png","card/diamonds/9.png","card/clubs/9.png","card/hearts/9.png",
-			"card/clubs/10.png", "card/diamonds/10.png","card/hearts/10.png","card/spades/10.png","card/diamonds/j.png","card/hearts/j.png",  "card/spades/j.png", "card/clubs/j.png",  
-			"card/diamonds/q.png", "card/hearts/q.png",  "card/spades/q.png","card/clubs/q.png", "card/spades/k.png","card/hearts/k.png","card/diamonds/k.png", "card/clubs/k.png"};
+	private final static String[] deckPic = {"sa.png","da.png", "ha.png", "ca.png",  "h2.png","d2.png", "c2.png","s2.png",
+			"c3.png","d3.png", "h3.png",  "s3.png", "c4.png", "s4.png", "d4.png","h4.png",
+			"c5.png", "d5.png", "s5.png", "h5.png",
+			"c6.png","d6.png","h6.png","s6.png", "d7.png","c7.png", "s7.png","h7.png",
+			"c8.png", "d8.png",   "h8.png","s8.png",  "s9.png","d9.png","c9.png","h9.png",
+			"c10.png", "d10.png","h10.png","s10.png","dj.png","hj.png",  "sj.png", "cj.png",  
+			"dq.png", "hq.png",  "sq.png","cq.png", "sk.png","hk.png","dk.png", "ck.png"};
 	private final static int[] deck = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ,21 ,22, 23 ,24 ,25, 26, 27, 28, 29 ,30,31,32,34,35,36,37,38, 39, 40, 41 ,42 ,43 ,44, 45,46,47
 			,48,49,50,51};
 	
@@ -60,16 +61,11 @@ public class Blackjack {
 		standButton = new JButton("stand");
 		resetButton = new JButton("play/reset");
 		
-		Icon cardback = new ImageIcon("card/cardback.png");
 		dealerCard1 = new JLabel("Dealer's hand:");
-		dealerCard1.setIcon(cardback);
 		dealerCard2 = new JLabel("");
-		dealerCard2.setIcon(cardback);
 
 		playerCard1 = new JLabel("Player's hand:");
-		playerCard1.setIcon(cardback);
 		playerCard2 = new JLabel("");
-		playerCard2.setIcon(cardback);
 		
 		dealerHand.add(dealerCard1);
 		dealerHand.add(dealerCard2);
@@ -92,7 +88,7 @@ public class Blackjack {
 		j.setVisible(true);
 	}
 	
-	public static void reset() {
+	public void reset() {
 		decki = new ArrayList<Integer>();
 		for(int i = 0; i < deck.length; i++) {
 			decki.add(i);
@@ -109,12 +105,12 @@ public class Blackjack {
 		Icon randomCard;
 		
 		
-		Icon cardback = new ImageIcon("card/cardback.png");
+		Icon cardback = new ImageIcon(getClass().getClassLoader().getResource("cardback.png"));
 		
 		//random card and icon
 		int r = getRandomCard();
 		updatePointsD(r);
-		randomCard = new ImageIcon(deckPic[r]);
+		randomCard = new ImageIcon(getClass().getClassLoader().getResource(deckPic[r]));
 		
 		dealerCard1.setIcon(randomCard);
 		
@@ -125,7 +121,7 @@ public class Blackjack {
 		//random card and icon
 		r = getRandomCard();
 		updatePointsP(r);
-		randomCard = new ImageIcon(deckPic[r]);
+		randomCard = new ImageIcon(getClass().getClassLoader().getResource(deckPic[r]));
 		playerCard1.setIcon(randomCard);
 		
 		
@@ -133,7 +129,7 @@ public class Blackjack {
 		//random card and icon
 		r = getRandomCard();
 		updatePointsP(r);
-		randomCard = new ImageIcon(deckPic[r]);
+		randomCard = new ImageIcon(getClass().getClassLoader().getResource(deckPic[r]));
 		playerCard2.setIcon(randomCard);
 		
 		playerHand.add(playerCard1);
@@ -216,14 +212,17 @@ public class Blackjack {
 		return 0;
 	}
 	
-	private static void dealerHit() {
+	
+	
+	private void dealerHit() {
 		if(play) {
 			dealerHand.remove(dealerCard2);
 			while(dp <= 17) {
 				//random card and icon
 				int r = getRandomCard();
 				updatePointsD(r);
-				Icon randomCard = new ImageIcon(deckPic[r]);
+				//Icon randomCard = new ImageIcon(deckPic[r]);
+				Icon randomCard = new ImageIcon(getClass().getClassLoader().getResource(deckPic[r]));
 				JLabel nc = new JLabel("");
 				nc.setIcon(randomCard);
 				
@@ -245,11 +244,11 @@ public class Blackjack {
 		
 	}
 	
-	private static void hit() {
+	private void hit() {
 		if(play) {
 			int r = getRandomCard();
 			updatePointsP(r);
-			Icon randomCard = new ImageIcon(deckPic[r]);
+			Icon randomCard = new ImageIcon(getClass().getClassLoader().getResource(deckPic[r]));
 			JLabel nc = new JLabel("");
 			nc.setIcon(randomCard);
 			playerHand.add(nc);
@@ -271,18 +270,17 @@ public class Blackjack {
 		
 		b.hitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					hit();
+					b.hit();
 				}
 			});
 		b.standButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					dealerHit();
+					b.dealerHit();
 				}
 			});
 		b.resetButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					reset();
+					b.reset();
 					
 					
 				}
